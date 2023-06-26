@@ -17,9 +17,6 @@
 	</head>
 
 	<body>
-		<header>
-			<!-- place navbar here -->
-		</header>
 		<main class="d-flex">
 			<div
 				class="container-fluid row m-0 vh-100 justify-content-center align-items-center">
@@ -28,15 +25,26 @@
 						<form action="/login" method="post">
 							<h3 class="text-center">APLICACION DE TAREAS</h3>
 							<h5 class="text-center">Login</h5>
-
 							<label>Email</label>
 							<input type="email" class="form-control mb-3" name="email" />
-
 							<label>Contraseña</label>
 							<input
 								type="password"
 								class="form-control mb-3"
 								name="password" />
+							<!-- sintaxys de Jinja -->
+							{% if message %}
+							<div
+								class="alert alert-danger alert-dismissible fade show"
+								role="alert">
+								<strong>Error!:</strong>{{ message }}
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="alert"
+									aria-label="Close"></button>
+							</div>
+							{% endif %}
 
 							<button type="submit" class="btn btn-primary w-100"
 								>Acceder</button
