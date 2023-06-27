@@ -9,7 +9,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Coneccion al config.py
-app.config['SECRET_KEY'] = config.HEX_SEC_KEY
+
 app.config['MYSQL_HOST'] = config.MYSQL_HOST
 app.config['MYSQL_USER'] = config.MYSQL_USER
 app.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD
@@ -57,7 +57,9 @@ def tasks():
     #Coneccion a la base de datos
     cur = mysql.connection.cursor()
     #Consulta a la base de datos para obtener las tareas del usuario
-    cur.execute('SELECT * FROM tasks WHERE email = %s', [email])
+    sql = 'SELECT * FROM tasks WHERE email = %s'
+    data = (email,)
+    cur.execute(sql, data)
     #Recibir informacion
     tasks = cur.fetchall()
     insertObject = []
@@ -67,7 +69,6 @@ def tasks():
         insertObject.append(dict(zip(columnNames, record)))
     #Cerrar coneccion
     cur.close()
-
     return render_template('tasks.html', tasks = insertObject)
 
     #Definir la ruta del logout
@@ -129,7 +130,24 @@ def newUser():
     #redirigir a la pagina de inicio
     return redirect(url_for('tasks'))
 
-    
+    #ruta para eliminar tarea
+@app.route('/delete-task', methods=['POST'])
+#definir la funcion
+def deleteTask():
+    cur = mysql.connection.cursor()
+    #obtener el id de la tarea
+    id = request.form['id']
+    #consulta para eliminar la tarea
+    sql = 'DELETE FROM tasks WHERE id = %s'
+    data = (id,)
+    #ejecutar la consulta
+    cur.execute(sql, data)
+    #guardar cambios
+    mysql.connection.commit()
+    #redirigir a la pagina de tareas
+    return redirect(url_for('tasks'))
+
+    #ruta para editar tarea
 
 if __name__ == '__main__':
     app.run(debug=True)
