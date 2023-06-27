@@ -68,7 +68,7 @@ def tasks():
     #Cerrar coneccion
     cur.close()
 
-    return render_template('tasks.html', tasks=insertObject)
+    return render_template('tasks.html', tasks = insertObject)
 
     #Definir la ruta del logout
 @app.route('/logout')
