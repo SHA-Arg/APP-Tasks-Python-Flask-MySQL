@@ -102,7 +102,7 @@ def newTask():
         #guardar cambios
         mysql.connection.commit()
     #redirigir a la pagina de tareas
-    return redirect(url_for('task'))
+    return redirect(url_for('tasks'))
 
 #ruta para nuevo usuario
 @app.route('/new-user', methods=['POST'])
@@ -127,13 +127,9 @@ def newUser():
         #guardar cambios
         mysql.connection.commit()
     #redirigir a la pagina de inicio
-    return redirect(url_for('task'))
+    return redirect(url_for('tasks'))
 
     
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
